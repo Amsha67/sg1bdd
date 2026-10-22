@@ -81,11 +81,11 @@ include __DIR__ . '/Asset/Header.php';
             <li>
                 <h3>
                     <?php
-                    echo $quete['nom'];
+                    echo $quete['Nom'];
                     ?>
                     <p>
                         <?php
-                        echo $quete['etat'];
+                        echo $quete['Etat'];
                         ?>
                     </p>
                     <span>
