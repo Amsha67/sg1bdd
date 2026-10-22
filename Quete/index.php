@@ -44,7 +44,7 @@ $quetes = [
 
 
 $total = count($quetes);
-function compterTachesRestantes(array $quetes): int
+function compterQuetesRestantes(array $quetes): int
 {
     $quetesrestantes = 0;
     foreach ($quetes as $quete):
@@ -60,7 +60,7 @@ function compterTachesRestantes(array $quetes): int
     return $quetesrestantes;
 }
 
-$quetesrestantes = compterTachesRestantes($quetes);
+$quetesrestantes = compterQuetesRestantes($quetes);
 $quetesterminee = $total - $quetesrestantes;
 
 
