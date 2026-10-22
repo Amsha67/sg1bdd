@@ -13,27 +13,25 @@ if ($exclamation === true) {
 } else {
     echo "En cours";
 }
-?>
 
-<?php
 $quetes = [
     [
         'id' => 1,
         'nom' => '1ere Quête',
-        'etat' => 'Démarée',
+        'etat' => 'Finie',
         'exclamation' => true,
     ],
     [
         'id' => 2,
         'nom' => '2eme Quête',
-        'etat' => 'Démarée',
+        'etat' => 'Finie',
         'exclamation' => true,
 
     ],
     [
         'id' => 3,
         'nom' => '3eme Quête',
-        'etat' => 'Finie',
+        'etat' => 'Démarée',
         'exclamation' => false,
     ],
     [
@@ -44,8 +42,27 @@ $quetes = [
     ]
 ];
 
-$quetesrestantes = 0;
+
+$total = count($quetes);
+function compterTachesRestantes(array $quetes): int
+{
+    $quetesrestantes = 0;
+    foreach ($quetes as $quete):
+
+        if ($quete['exclamation'] == false) {
+            $quetesrestantes++;
+        }
+        if ($quete['exclamation'] == true) {
+            $quetesterminee++;
+        }
+
+    endforeach;
+    return $quetesrestantes;
+}
+
+$quetesrestantes = compterTachesRestantes($quetes);
 $quetesterminee = $total - $quetesrestantes;
+
 
 
 
@@ -74,47 +91,41 @@ $quetesterminee = $total - $quetesrestantes;
             // echo $quete['nom'];
             ?>
         </h1>
-        
-        <h2>
-            <?php
-            $total = count($quetes);
-            echo $total;
 
-            ?>
+        <h2>
+
+            <ul>
+                <li> <?php echo 'Quêtes en cours : ', $quetesrestantes, '  '; ?></li>
+                <li> <?php echo 'Quêtes finies : ', $quetesterminee, '  '; ?></li>
+                <li> <?php echo 'Total des quêtes : ', $total; ?></li>
+
+            </ul>
+        </h2>
+        <h2>
 
         </h2>
-
         <ul>
-            
-        
-        
-        <br>
+
+
+            <br>
             <?php foreach ($quetes as $quete):
 
                 if ($quete['exclamation'] == false) {
                     $quetesrestantes++;
                 }
+                if ($quete['exclamation'] == true) {
+                    $quetesterminee++;
+                }
 
-                echo $quetesrestantes;
 
 
 
                 ?>
                 <br>
-                
-               <?php foreach ($quetes as $quete):
 
-                if ($quete['exclamation'] == true) {
-                    $quetesterminee++;
-                }
-
-                echo $quetesterminee;
-                ?>
-                
 
                 <li>
                     <h3>
-
                         <?php
                         echo $quete['nom'];
                         ?>
@@ -122,7 +133,6 @@ $quetesterminee = $total - $quetesrestantes;
                             <?php
                             echo $quete['etat'];
                             ?>
-
                         </p>
                         <span><?php
                         echo $quete['exclamation'];
