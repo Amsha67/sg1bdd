@@ -1,38 +1,27 @@
 <?
 
 
-
-
-
-
-if ($exclamation === true) {
-    echo "Terminée";
-} else {
-    echo "En cours";
-}
 function compterQuetesRestantes(array $quetes): int
 {
     $quetesrestantes = 0;
     foreach ($quetes as $quete):
 
-        if ($quete['exclamation'] == false) {
+        if ($quete['exclamation'] === 0) {
             $quetesrestantes++;
+            echo "plop";
         }
-        if ($quete['exclamation'] == true) {
+        if ($quete['exclamation'] === 1) {
             $quetesterminee++;
         }
 
     endforeach;
     return $quetesrestantes;
 }
-echo "En cours 1";
-$quetesrestantes = compterQuetesRestantes($quetes);
-$quetesterminee = $total - $quetesrestantes;
 
 
 
-include __DIR__ . '/Asset/Header.php';
 
-echo "En cours";
+
+
 
 ?>

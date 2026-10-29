@@ -1,4 +1,5 @@
 <?php
+include __DIR__ . '/Asset/Header.php';
 
 require __DIR__ . '/donnees.php';
 require __DIR__ . '/connexion.php';
@@ -19,8 +20,11 @@ echo '</pre>';
 
 
 
+
+
 $total = count($quetes);
-echo "En cours";
+$quetesrestantes = compterQuetesRestantes($quetes);
+$quetesterminee = $total - $quetesrestantes;
 
 ?>
 
@@ -48,49 +52,57 @@ echo "En cours";
     <h2>
 
     </h2>
+    <h2>Ajouter une Quête</h2>
+    <form action="ajouter.php" method="post">
+        <label for="quete">Nom de la quête</label>
+        <input id="quete" name="quete" required maxlength="150">
+
+        <label for="etat">Etat</label>
+        <select id="etat" name="etat">
+            <option value="finie">Finie</option>
+            <option value="encours">En cours</option>
+
+        </select>
+
+        <button type="submit">Ajouter</button>
+    </form>
+
     <ul>
-
-
-        <br>
+        <!-- <br> -->
         <?php foreach ($quetes as $quete):
-            echo "En cours";
-            if ($quete['exclamation'] == false) {
-                $quetesrestantes++;
-            }
-            if ($quete['exclamation'] == true) {
-                $quetesterminee++;
-            }
-
-
-
-
-            ?>
+            // echo "En cours";
+            // if ($quete['exclamation'] == false) {
+            //     $quetesrestantes++;
+            // }
+            // if ($quete['exclamation'] == true) {
+            //     $quetesterminee++;
+            // } ?>
             <br>
-
-
             <li>
                 <h3>
                     <?php
                     echo $quete['Nom'];
                     ?>
-                    <p>
-                        <?php
-                        echo $quete['Etat'];
-                        ?>
-                    </p>
-                    <span>
-                        <?php
-                        echo $quete['exclamation'];
-                        ?>
-                    </span>
                 </h3>
+                <p>
+                    <?php
+                    echo $quete['Etat'];
+                    ?>
+                </p>
+                <span>
+                    <?php
+                    if ($quete['exclamation'] === 1) {
+                        echo "Terminée";
+                    } else {
+                        echo "En cours";
+                    }
+                    ?>
+                </span>
             </li>
         <?php endforeach; ?>
     </ul>
-
 </main>
 
 <?php
-
 include __DIR__ . '/Asset/Footer.php';
 ?>
