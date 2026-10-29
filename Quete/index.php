@@ -1,37 +1,27 @@
 <?php
-require __DIR__ . '/donnees.php';
 
-if ($exclamation === true) {
-    echo "Terminée";
-} else {
-    echo "En cours";
-}
+require __DIR__ . '/donnees.php';
+require __DIR__ . '/connexion.php';
+require __DIR__ . '/function.php';
+
+
+
+
+
+$requete = $pdo->query(
+    'SELECT Id_quete, Nom, Etat, exclamation FROM quetes'
+);
+
+$quetes = $requete->fetchAll();
+echo '<pre>';
+var_dump($quetes);
+echo '</pre>';
 
 
 
 $total = count($quetes);
-function compterQuetesRestantes(array $quetes): int
-{
-    $quetesrestantes = 0;
-    foreach ($quetes as $quete):
+echo "En cours";
 
-        if ($quete['exclamation'] == false) {
-            $quetesrestantes++;
-        }
-        if ($quete['exclamation'] == true) {
-            $quetesterminee++;
-        }
-
-    endforeach;
-    return $quetesrestantes;
-}
-
-$quetesrestantes = compterQuetesRestantes($quetes);
-$quetesterminee = $total - $quetesrestantes;
-
-
-
-include __DIR__ . '/Asset/Header.php';
 ?>
 
 
@@ -63,7 +53,7 @@ include __DIR__ . '/Asset/Header.php';
 
         <br>
         <?php foreach ($quetes as $quete):
-
+            echo "En cours";
             if ($quete['exclamation'] == false) {
                 $quetesrestantes++;
             }
@@ -101,5 +91,6 @@ include __DIR__ . '/Asset/Header.php';
 </main>
 
 <?php
+
 include __DIR__ . '/Asset/Footer.php';
 ?>
