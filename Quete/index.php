@@ -14,11 +14,18 @@ $requete = $pdo->query(
 );
 
 $quetes = $requete->fetchAll();
-echo '<pre>';
-var_dump($quetes);
-echo '</pre>';
+// echo '<pre>';
+// var_dump($quetes);
+// echo '</pre>';
 
 
+
+$etat = $_GET['etat'] ?? 'toutes';
+$etatsAutorises = ['toutes', 'fini', 'demarre'];
+
+if (!in_array($etat, $etatsAutorises, true)) {
+    $etat = 'toutes';
+}
 
 
 
@@ -34,24 +41,32 @@ $quetesterminee = $total - $quetesrestantes;
         Journal de quêtes :
     </h1>
 
-    <h2>
+    <ul>
+        <li>
+            <a href='index.php?etat=demarre'>Quêtes démarée</a>
+        </li>
+        <li>
+            <a href='index.php?etat=fini'>Quêtes finie</a>
+        </li>
+        <li>
+            <a href='index.php'>Toutes les quêtes</a>
+        </li>
 
-        <ul>
-            <li>
-                <?php echo 'Quêtes en cours : ', $quetesrestantes, '  '; ?>
-            </li>
-            <li>
-                <?php echo 'Quêtes finies : ', $quetesterminee, '  '; ?>
-            </li>
-            <li>
-                <?php echo 'Total des quêtes : ', $total; ?>
-            </li>
+    </ul>
 
-        </ul>
-    </h2>
-    <h2>
+    <ul>
+        <li>
+            <?php echo 'Quêtes en cours : ', $quetesrestantes, '  '; ?>
+        </li>
+        <li>
+            <?php echo 'Quêtes finies : ', $quetesterminee, '  '; ?>
+        </li>
+        <li>
+            <?php echo 'Total des quêtes : ', $total; ?>
+        </li>
 
-    </h2>
+    </ul>
+    <a h></a>
     <h2>Ajouter une Quête</h2>
     <form action="ajouter.php" method="post">
         <label for="quete">Nom de la quête</label>
@@ -68,38 +83,39 @@ $quetesterminee = $total - $quetesrestantes;
     </form>
 
     <ul>
-        <!-- <br> -->
-        <?php foreach ($quetes as $quete):
-            // echo "En cours";
-            // if ($quete['exclamation'] == false) {
-            //     $quetesrestantes++;
-            // }
-            // if ($quete['exclamation'] == true) {
-            //     $quetesterminee++;
-            // } ?>
-            <br>
-            <li>
-                <h3>
-                    <?php
-                    echo $quete['Nom'];
-                    ?>
-                </h3>
-                <p>
-                    <?php
-                    echo $quete['Etat'];
-                    ?>
-                </p>
-                <span>
-                    <?php
-                    if ($quete['exclamation'] === 1) {
-                        echo "Terminée";
-                    } else {
-                        echo "En cours";
-                    }
-                    ?>
-                </span>
-            </li>
-        <?php endforeach; ?>
+
+        <?php
+        if ($etat === 'toutes') {
+
+
+            foreach ($quetes as $quete):
+                ?>
+                <br>
+                <li>
+                    <h3>
+                        <?php
+                        echo $quete['Nom'];
+                        ?>
+                    </h3>
+                    <p>
+                        <?php
+                        echo $quete['Etat'];
+                        ?>
+                    </p>
+                    <span>
+                        <?php
+                        if ($quete['exclamation'] === 1) {
+                            echo "Terminée";
+                        } else {
+                            echo "En cours";
+                        }
+                        ?>
+                    </span>
+                </li>
+            <?php endforeach;
+        }
+        ?>
+
     </ul>
 </main>
 
