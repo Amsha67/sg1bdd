@@ -1,36 +1,61 @@
 <?php
 
-require __DIR__ . '/connexion.php';
+require_once __DIR__ . '/securite.php';
+require_once __DIR__ . '/connexion.php';
 
+verifierFormulaire();
 
+// Lire les valeurs sans les transformer immédiatement.
 $quete = $_POST['quete'] ?? '';
 $etat = $_POST['etat'] ?? '';
+
+// Vérifier les types avant d’appeler trim().
+if (!is_string($quete) || !is_string($etat)) {
+    http_response_code(400);
+    exit('Données invalides.');
+}
 
 $quete = trim($quete);
 $etat = trim($etat);
 
-
-
-if (!is_string($quete) || !is_string($etat)) {
-    exit('Données invalides.');
+// Contrôler le nom.
+if ($quete === '') {
+    http_response_code(400);
+    exit('Le nom de la quête est obligatoire.');
 }
 
-
-if ($quete === '')
-    exit('Lenomestobligatoire.');
-if (!in_array($etat, ['finie', 'encours',], true)) {
-    exit('La priorité est invalide.');
+if (mb_strlen($quete, 'UTF-8') > 150) {
+    http_response_code(400);
+    exit('Le nom ne doit pas dépasser 150 caractères.');
 }
+
+// Contrôler l’état.
+if (!in_array($etat, ['Finie', 'En cours'], true)) {
+    http_response_code(400);
+    exit('L’état de la quête est invalide.');
+}
+
+// Conserver la cohérence entre les deux colonnes.
+$exclamation = ($etat === 'finie') ? 1 : 0;
 
 $requete = $pdo->prepare(
-    'INSERT INTO quetes (Nom, Etat)
-     VALUES (:quete, :etat)'
+    'INSERT INTO quetes (Nom, Etat, exclamation)
+     VALUES (:nom, :etat, :exclamation)'
 );
 
-$requete->execute([
-    'quete' => $quete,
-    'etat' => $etat,
-]);
+$requete->bindValue(':nom', $quete, PDO::PARAM_STR);
+$requete->bindValue(':etat', $etat, PDO::PARAM_STR);
+$requete->bindValue(
+    ':exclamation',
+    $exclamation,
+    PDO::PARAM_INT
+);
 
+$requete->execute();
+
+// Préparer un message pour la prochaine page.
+$_SESSION['message'] = 'La quête a bien été ajoutée.';
+
+// Rediriger après le POST.
 header('Location: index.php', true, 303);
 exit;

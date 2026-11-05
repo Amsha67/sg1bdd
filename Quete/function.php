@@ -8,7 +8,7 @@ function compterQuetesRestantes(array $quetes): int
 
         if ($quete['exclamation'] === 0) {
             $quetesrestantes++;
-            echo "plop";
+
         }
         if ($quete['exclamation'] === 1) {
             $quetesterminee++;
