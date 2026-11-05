@@ -3,7 +3,15 @@
 require_once __DIR__ . '/securite.php';
 require_once __DIR__ . '/connexion.php';
 require_once __DIR__ . '/function.php';
+echo '<pre>';
+echo 'Version PHP : ' . PHP_VERSION . PHP_EOL;
+echo 'php.ini chargé : ' . (php_ini_loaded_file() ?: 'Aucun') . PHP_EOL;
+echo 'Dossier des extensions : ' . ini_get('extension_dir') . PHP_EOL;
 
+echo 'fileinfo : '
+    . (extension_loaded('fileinfo') ? 'activée' : 'non activée');
+
+echo '</pre>';
 // 1. Lire le filtre transmis dans l’URL.
 $etat = $_GET['etat'] ?? 'toutes';
 
@@ -210,17 +218,8 @@ include __DIR__ . '/Asset/Header.php';
     </p>
     <!DOCTYPE html>
     <html lang="fr">
-
-    <head>
-        <meta charset="UTF-8">
-        <title>Envoyer un fichier texte</title>
-    </head>
-
-
-    <h1>Envoyer un fichier texte</h1>
-
-
-    <a href="upload.php">Envoyer un fichier texte</a>
+    <p>
+        <a href="upload.php">Envoyer un fichier texte</a>
     </p>
 
 
