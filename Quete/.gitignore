@@ -1,0 +1,4 @@
+connexion.php
+stockage.php
+git rm --cached connexion.php
+git rm --cached stockage.php

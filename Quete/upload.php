@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $cheminTemporaire = $fichier['tmp_name'];
-        echo 'plop1';
+
         if (!is_uploaded_file($cheminTemporaire)) {
             throw new RuntimeException(
                 'Le fichier ne provient pas d’un envoi autorisé.'
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'Seuls les fichiers avec l’extension .txt sont acceptés.'
             );
         }
-        echo 'plop1.3';
+
         // Détecter le type à partir du contenu réel.
         $detecteur = new finfo(FILEINFO_MIME_TYPE);
         $mime = $detecteur->file($cheminTemporaire);
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nomStockage = bin2hex(random_bytes(16)) . '.txt';
 
         $destination = $dossierUploads . '/' . $nomStockage;
-        echo 'plop2';
+
         if (!move_uploaded_file($cheminTemporaire, $destination)) {
             throw new RuntimeException(
                 'Le fichier n’a pas pu être enregistré.'
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = $erreur->getMessage();
     }
 }
-echo 'plop3';
+
 ?>
 
 <!DOCTYPE html>
