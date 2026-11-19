@@ -6,7 +6,7 @@ $quete1 = new Quete('Explorer la forêt');
 $quete2 = new Quete('Retrouver le grimoire');
 
 $quete1->terminer();
-
+$quete1->reprendre();
 $quetes = [$quete1, $quete2];
 
 ?>
